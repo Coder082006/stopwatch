@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Stopwatch</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f0f0f0;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Big display box */
+        .display-box {
+            background: #fff;
+            border: 3px solid #000;
+            padding: 30px 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin-right: 20px;
+        }
+
+        .time {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        /* Stop button below display */
+        .stop-btn {
+        margin-top: 10px;
+        width: 60%;
+        padding: 10px;
+        font-size: 16px;
+        }
+        .left-side {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
+
+        /* Buttons on the right */
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Display + Stop button wrapper -->
+    <div class="left-side">
+
+        <!-- Big time display -->
+        <div class="display-box">
+            <div class="time" id="time">00:00</div>
+        </div>
+
+        <!-- STOP button BELOW the display box -->
+        <button class="stop-btn" onclick="stop()">STOP</button>
+    </div>
+
+    <!-- Right side buttons -->
+    <div class="buttons">
+        <button onclick="start()">START</button>
+        <button onclick="reset()">RESET</button>
+    </div>
+
+</div>
+<script>
+    let hours = 0;
+    let minutes = 0;
+    let interval = null;
+
+    function start() {
+        if (interval !== null) return;
+
+        interval = setInterval(() => {
+            minutes++;
+
+            if (minutes === 60) {
+                minutes = 0;
+                hours++;
+            }
+
+            updateDisplay();
+        }, 1000);
+    }
+
+    function stop() {
+        clearInterval(interval);
+        interval = null;
+    }
+
+    function reset() {
+        stop();
+        hours = 0;
+        minutes = 0;
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        let h = hours < 10 ? "0" + hours : hours;
+        let m = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("time").innerText = h + ":" + m;
+    }
+</script>
+
+</body>
+</html>
