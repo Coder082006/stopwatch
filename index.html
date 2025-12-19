@@ -7,11 +7,11 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background: #f2f2f2;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: #f0f0f0;
         }
 
         .container {
@@ -19,35 +19,36 @@
             align-items: center;
         }
 
-        /* Big display box */
+        /* Left side (display + stop button) */
+        .left-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        /* Time display */
         .display-box {
             background: #fff;
             border: 3px solid #000;
             padding: 30px 40px;
-            border-radius: 10px;
-            text-align: center;
-            margin-right: 20px;
-        }
-
-        .time {
             font-size: 48px;
             font-weight: bold;
+            border-radius: 10px;
+            min-width: 260px;
+            text-align: center;
         }
 
-        /* Stop button below display */
+        /* Stop button */
         .stop-btn {
-        margin-top: 10px;
-        width: 60%;
-        padding: 10px;
-        font-size: 16px;
-        }
-        .left-side {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+            margin-top: 10px;
+            padding: 10px 30px;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
         }
 
-        /* Buttons on the right */
+        /* Right side buttons */
         .buttons {
             display: flex;
             flex-direction: column;
@@ -65,36 +66,41 @@
 
 <div class="container">
 
-    <!-- Display + Stop button wrapper -->
+    <!-- LEFT SIDE -->
     <div class="left-side">
-        <h2>STOP WATCH</h2>
-        <!-- Big time display -->
         <div class="display-box">
-            <div class="time" id="time">00:00</div>
+            <span id="hours">00</span> :
+            <span id="minutes">00</span> :
+            <span id="seconds">00</span>
         </div>
 
-        <!-- STOP button BELOW the display box -->
         <button class="stop-btn" onclick="stop()">STOP</button>
     </div>
 
-    <!-- Right side buttons -->
+    <!-- RIGHT SIDE -->
     <div class="buttons">
         <button onclick="start()">START</button>
         <button onclick="reset()">RESET</button>
     </div>
 
 </div>
+
 <script>
     let hours = 0;
     let minutes = 0;
+    let seconds = 0;
     let interval = null;
 
     function start() {
         if (interval !== null) return;
 
-        // 60000 milliseconds = 1 minute
         interval = setInterval(() => {
-            minutes++;
+            seconds++;
+
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+            }
 
             if (minutes === 60) {
                 minutes = 0;
@@ -102,7 +108,7 @@
             }
 
             updateDisplay();
-        }, 60000);
+        }, 1000);
     }
 
     function stop() {
@@ -114,19 +120,21 @@
         stop();
         hours = 0;
         minutes = 0;
+        seconds = 0;
         updateDisplay();
     }
 
     function updateDisplay() {
-        let h = hours < 10 ? "0" + hours : hours;
-        let m = minutes < 10 ? "0" + minutes : minutes;
-        document.getElementById("time").innerText = h + ":" + m;
+        document.getElementById("hours").innerText =
+            hours < 10 ? "0" + hours : hours;
+
+        document.getElementById("minutes").innerText =
+            minutes < 10 ? "0" + minutes : minutes;
+
+        document.getElementById("seconds").innerText =
+            seconds < 10 ? "0" + seconds : seconds;
     }
 </script>
 
-
-
 </body>
 </html>
-
-
