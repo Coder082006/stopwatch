@@ -35,7 +35,7 @@
             font-size: 48px;
             font-weight: bold;
             border-radius: 10px;
-            min-width: 260px;
+            min-width: 200px;
             text-align: center;
         }
 
@@ -70,8 +70,7 @@
     <div class="left-side">
         <div class="display-box">
             <span id="hours">00</span> :
-            <span id="minutes">00</span> :
-            <span id="seconds">00</span>
+            <span id="minutes">00</span>
         </div>
 
         <button class="stop-btn" onclick="stop()">STOP</button>
@@ -88,19 +87,13 @@
 <script>
     let hours = 0;
     let minutes = 0;
-    let seconds = 0;
     let interval = null;
 
     function start() {
         if (interval !== null) return;
 
         interval = setInterval(() => {
-            seconds++;
-
-            if (seconds === 60) {
-                seconds = 0;
-                minutes++;
-            }
+            minutes++;
 
             if (minutes === 60) {
                 minutes = 0;
@@ -108,7 +101,7 @@
             }
 
             updateDisplay();
-        }, 1000);
+        }, 60000); // increment every 1 minute
     }
 
     function stop() {
@@ -120,7 +113,6 @@
         stop();
         hours = 0;
         minutes = 0;
-        seconds = 0;
         updateDisplay();
     }
 
@@ -130,9 +122,6 @@
 
         document.getElementById("minutes").innerText =
             minutes < 10 ? "0" + minutes : minutes;
-
-        document.getElementById("seconds").innerText =
-            seconds < 10 ? "0" + seconds : seconds;
     }
 </script>
 
