@@ -92,6 +92,7 @@
     function start() {
         if (interval !== null) return;
 
+        // 60000 milliseconds = 1 minute
         interval = setInterval(() => {
             minutes++;
 
@@ -101,7 +102,7 @@
             }
 
             updateDisplay();
-        }, 1000);
+        }, 60000);
     }
 
     function stop() {
@@ -123,6 +124,9 @@
     }
 </script>
 
+
+
 </body>
 </html>
+
 
